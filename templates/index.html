@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="space-y-12 animate-fade-in-up">
+    <!-- HERO -->
+    <div class="relative rounded-3xl overflow-hidden shadow-2xl h-[400px] bg-gray-900">
+        {% if home_config.heroImage %}
+        <img src="{{ home_config.heroImage }}" class="absolute inset-0 w-full h-full object-cover opacity-60">
+        {% else %}
+        <div class="absolute inset-0 bg-gradient-to-br from-teal-800 to-cyan-800 opacity-90"></div>
+        {% endif %}
+        <div class="absolute inset-0 flex flex-col items-center justify-center text-center text-white p-6">
+            <img src="{{ brand_logo }}" class="w-24 h-24 mb-4 drop-shadow-md bg-white rounded-full p-2">
+            <h1 class="text-4xl md:text-5xl font-extrabold uppercase mb-2">{{ home_config.heroTitle }}</h1>
+            <p class="text-xl opacity-90">{{ home_config.heroSubtitle }}</p>
+            <div class="mt-8 flex gap-4">
+                <a href="/equipment" class="bg-white text-primary px-6 py-3 rounded-full font-bold hover:bg-gray-100 transition">Tra cứu thiết bị</a>
+                <a href="/scan" class="bg-primary/80 backdrop-blur text-white px-6 py-3 rounded-full font-bold hover:bg-primary transition flex items-center gap-2">
+                    <i data-lucide="qr-code"></i> Quét QR
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTRO -->
+    <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+            <i data-lucide="book-open" class="text-primary"></i> {{ home_config.introTitle }}
+        </h2>
+        <p class="text-gray-600 leading-relaxed text-justify">{{ home_config.introContent }}</p>
+    </div>
+
+    <!-- FEATURED -->
+    <div>
+        <div class="flex items-center gap-3 mb-6">
+            <div class="p-2 bg-yellow-100 text-yellow-600 rounded-lg"><i data-lucide="star"></i></div>
+            <h3 class="font-bold text-2xl text-gray-800">{{ home_config.featuredTitle }}</h3>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {% for item in featured_equipment %}
+            <a href="/equipment/{{ item.id }}" class="bg-white rounded-2xl shadow-sm border hover:shadow-xl transition group overflow-hidden">
+                <div class="h-48 bg-gray-100 relative">
+                    <img src="{{ item.images[0] }}" class="w-full h-full object-cover transition duration-500 group-hover:scale-105">
+                </div>
+                <div class="p-4">
+                    <h4 class="font-bold text-gray-900 mb-1 truncate">{{ item.name }}</h4>
+                    <p class="text-xs text-gray-500 font-mono">{{ item.code }}</p>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
